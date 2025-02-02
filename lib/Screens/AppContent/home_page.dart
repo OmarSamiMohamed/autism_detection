@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:autism_detection/Screens/AppContent/Diagnosis_page.dart';
-
+import 'package:autism_detection/gemini_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -184,6 +184,8 @@ class MenuPage extends StatelessWidget {
 }
 
 // صفحة شات بوت
+ // استبدل باسم مشروعك
+
 class ChatBotPage extends StatefulWidget {
   const ChatBotPage({super.key});
 
@@ -192,23 +194,33 @@ class ChatBotPage extends StatefulWidget {
 }
 
 class _ChatBotPageState extends State<ChatBotPage> {
-  final List<String> _messages = []; // قائمة الرسائل
+  final List<Map<String, String>> _messages = []; // قائمة الرسائل (نص + نوع المرسل)
   final TextEditingController _controller = TextEditingController();
+  bool _isLoading = false; // حالة تحميل الرد
 
-  void _sendMessage() {
-    if (_controller.text.isNotEmpty) {
-      setState(() {
-        _messages.add(_controller.text);
-        _controller.clear();
-      });
-    }
+  void _sendMessage() async {
+    if (_controller.text.isEmpty) return;
+
+    String userMessage = _controller.text;
+    setState(() {
+      _messages.insert(0, {"sender": "user", "text": userMessage});
+      _controller.clear();
+      _isLoading = true;
+    });
+
+    String botResponse = await GeminiService.sendMessage(userMessage);
+
+    setState(() {
+      _messages.insert(0, {"sender": "bot", "text": botResponse});
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70 ,
+        toolbarHeight: 70,
         backgroundColor: Colors.blue,
         centerTitle: true,
         title: SizedBox(
@@ -226,16 +238,35 @@ class _ChatBotPageState extends State<ChatBotPage> {
                 reverse: true,
                 itemCount: _messages.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      _messages[_messages.length - 1 - index],
-                      style: const TextStyle(fontSize: 16),
+                  final message = _messages[index];
+                  return Align(
+                    alignment: message["sender"] == "user"
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: message["sender"] == "user"
+                            ? Colors.blue[100]
+                            : Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        message["text"]!,
+                        style: const TextStyle(fontSize: 16),
+                      ),
                     ),
-                    leading: const Icon(Icons.person, color: Colors.blue),
                   );
                 },
               ),
             ),
+            if (_isLoading)
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -245,8 +276,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                       controller: _controller,
                       decoration: InputDecoration(
                         hintText: 'أرسل رسالة....',
-                        hintStyle: const TextStyle(fontFamily: "Alexandria",),
-                        border:OutlineInputBorder(
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20), // جعل الحواف دائرية
                         ),
                         contentPadding: const EdgeInsets.symmetric(
@@ -268,4 +298,4 @@ class _ChatBotPageState extends State<ChatBotPage> {
       ),
     );
   }
-}  
+}
