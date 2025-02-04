@@ -9,7 +9,14 @@ class QuestionsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white, // جعل خلفية الصفحة بيضاء
       appBar: AppBar(
+        toolbarHeight: 90,
         backgroundColor: Colors.white,
+        centerTitle: true,
+         title: SizedBox(
+          height: 100,
+          width: 100,
+          child: Image.asset("Photos/gradLogo1.png"), // استبدل بمسار الصورة الخاص بك
+        ),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -21,23 +28,21 @@ class QuestionsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-            Image.asset("Photos/gradLogo1.png",
-              width: 100,
-              height: 150),
+          
    Container(
   decoration: BoxDecoration( // لون الخلفية اللبني
     border: Border.all(
       color: Colors.blue, // لون الحواف الزرقاء
       width: 2.0, // سمك الحواف
     ),
-    borderRadius: BorderRadius.circular(8.0), // جعل الحواف مستديرة إذا كنت تريد
+    borderRadius: BorderRadius.circular(8), // جعل الحواف مستديرة إذا كنت تريد
   ),
-  padding: const EdgeInsets.all(8.0), // مسافة بين النص والحواف
+  padding: const EdgeInsets.all(10), // مسافة بين النص والحواف
   child: const Text(
     'الأسئلة',
     style: TextStyle(
       fontFamily: "Alexandria",
-      fontSize: 24.0, // حجم الخط الكبير
+      fontSize: 17, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       color: Colors.blue, // لون الخط أسود
     ),
@@ -45,7 +50,7 @@ class QuestionsPage extends StatelessWidget {
   ),
 ),
 
-          const SizedBox(height: 80), // مسافة بين النص والقائمة
+          const SizedBox(height: 40), // مسافة بين النص والقائمة
           _buildListTile(context, 'السلوكيات التكرارية أو المقيدة' ,  const RepetitiveBehaviorsPage()),
           _buildListTile(context, 'التفاعل الاجتماعي',  const SocialInteractionPage()),
           _buildListTile(context, 'التواصل اللفظي وغير لفظي', const CommunicationPage()),
@@ -60,9 +65,9 @@ class QuestionsPage extends StatelessWidget {
     return ListTile(
       title: Text(
         title,
-        style: const TextStyle(fontFamily: "Alexandria",fontSize: 18.0, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontFamily: "Alexandria",fontSize: 15, fontWeight: FontWeight.bold),
       ),
-      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black), // سهم باتجاه اليمين
+      trailing: const Icon(Icons.arrow_back_ios, color: Colors.black), // سهم باتجاه اليمين
       onTap: () {
         Navigator.push(
           context,

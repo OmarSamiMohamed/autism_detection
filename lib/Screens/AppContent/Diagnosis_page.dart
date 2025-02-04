@@ -28,8 +28,8 @@ class DiagnosisPage extends StatelessWidget {
                 ],
               ),
               Image.asset("Photos/gradLogo1.png",
-              width: 200,
-              height: 200),
+              width: 400,
+              height: 400),
               const SizedBox(height: 10),
               TextField(
                   controller: nameController,

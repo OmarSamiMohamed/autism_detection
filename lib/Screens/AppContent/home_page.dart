@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           elevation: 0,
           leading: IconButton(
-            iconSize: 40,
+            iconSize: 34,
             icon: const Icon(Icons.notifications_none_outlined, color: Colors.black),
             onPressed: () {}, // الإجراء عند الضغط
           ),
@@ -43,18 +43,18 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const Text(
-                "!..مرحبا بيك ",
+                "!..أهلا بيك ",
                 style: TextStyle(
                   fontFamily: "Alexandria",
                   color: Colors.blue,
-                  fontSize: 26,
+                  fontSize: 20,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(width: 10),
               CircleAvatar(
                 backgroundColor: Colors.grey.shade300,
-                radius: 24,
+                radius: 20,
               ),
             ],
           ),
@@ -97,67 +97,88 @@ class _HomePageState extends State<HomePage> {
 }
 
 // صفحة المحتوى الرئيسية
+
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                return DiagnosisPage();
-              }));
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey[200],
-              padding: const EdgeInsets.symmetric(horizontal: 63, vertical: 27),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: Colors.grey.shade400),
-              ),
-            ),
-            child: const Text(
-              'تشخيص',
-              style: TextStyle(
-                fontFamily: "Alexandria",
-                color: Colors.blue,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+    return Stack(
+      children: [
+        /// الخلفية بالصورة مع التكبير
+        Positioned.fill(
+          child: Transform.scale(
+            scale: 1.45, // تكبير الصورة بنسبة 20% فوق حجمها الطبيعي
+            child: Opacity(
+              opacity: 0.4, // شفافية الصورة
+              child: Image.asset(
+                'Photos/Logo.png',
+                fit: BoxFit.cover, // يجعل الصورة تغطي الشاشة بالكامل
               ),
             ),
           ),
-          const SizedBox(height: 50),
-          ElevatedButton(
-            onPressed: () {
-              // الإجراء عند الضغط على الزر الثاني
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey[200],
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 28),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: Colors.grey.shade400),
+        ),
+
+        // محتوى الصفحة فوق الخلفية
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                    return DiagnosisPage();
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey[200],
+                  padding: const EdgeInsets.symmetric(horizontal: 63, vertical: 27),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(color: Colors.grey.shade400),
+                  ),
+                ),
+                child: const Text(
+                  'تشخيص',
+                  style: TextStyle(
+                    fontFamily: "Alexandria",
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
-            ),
-            child: const Text(
-              'دعم ونصائح',
-              style: TextStyle(
-                fontFamily: "Alexandria",
-                color: Colors.blue,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+              const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () {
+                  // الإجراء عند الضغط على الزر الثاني
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey[200],
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 28),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(color: Colors.grey.shade400),
+                  ),
+                ),
+                child: const Text(
+                  'دعم ونصائح',
+                  style: TextStyle(
+                    fontFamily: "Alexandria",
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
+
 
 // صفحة الإعدادات
 class SettingsPage extends StatelessWidget {
@@ -276,6 +297,10 @@ class _ChatBotPageState extends State<ChatBotPage> {
                       controller: _controller,
                       decoration: InputDecoration(
                         hintText: 'أرسل رسالة....',
+                        hintStyle: TextStyle(
+                          fontFamily: "Alexandria",
+                          fontSize: 13
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20), // جعل الحواف دائرية
                         ),
