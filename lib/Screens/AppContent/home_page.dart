@@ -1,3 +1,4 @@
+import 'package:autism_detection/Screens/AppContent/support_page.dart';
 import 'package:flutter/material.dart';
 import 'package:autism_detection/Screens/AppContent/Diagnosis_page.dart';
 import 'package:autism_detection/gemini_service.dart';
@@ -151,7 +152,9 @@ class HomeContent extends StatelessWidget {
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () {
-                  // الإجراء عند الضغط على الزر الثاني
+                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                    return SupportPage();
+                  }));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey[200],

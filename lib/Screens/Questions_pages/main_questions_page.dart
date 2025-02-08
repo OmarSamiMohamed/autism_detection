@@ -9,7 +9,7 @@ class QuestionsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white, // جعل خلفية الصفحة بيضاء
       appBar: AppBar(
-        toolbarHeight: 90,
+        toolbarHeight: 80,
         backgroundColor: Colors.white,
         centerTitle: true,
          title: SizedBox(
@@ -17,16 +17,10 @@ class QuestionsPage extends StatelessWidget {
           width: 100,
           child: Image.asset("Photos/gradLogo1.png"), // استبدل بمسار الصورة الخاص بك
         ),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+     
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(10),
         children: [
           
    Container(
