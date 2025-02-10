@@ -28,7 +28,7 @@ class SupportPage extends StatelessWidget {
         'صفحة الدعم والارشادات',
         style: TextStyle(
           fontFamily: "Alexandria",
-          fontSize: 25, // حجم الخط الكبير
+          fontSize: 33, // حجم الخط الكبير
           fontWeight: FontWeight.bold, // جعل الخط عريض
           color: Colors.blue, // لون الخط أسود
         ),
@@ -42,10 +42,10 @@ class SupportPage extends StatelessWidget {
           style: TextStyle(
             fontFamily: "Alexandria",
             fontSize: 20, // حجم الخط الكبير
-            fontWeight: FontWeight.bold, // جعل الخط عريض
+            fontWeight: FontWeight.normal, // جعل الخط عريض
             color: Colors.black, // لون الخط أسود
           ),
-          textAlign: TextAlign.right, // جعل النص في المنتصف
+          textAlign: TextAlign.center, // جعل النص في المنتصف
                ),
        ),
        const SizedBox(height: 300,),

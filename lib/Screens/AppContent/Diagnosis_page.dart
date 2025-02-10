@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:autism_detection/Screens/AppContent/photo_upload.dart';
 import 'package:autism_detection/Screens/Questions_pages/main_questions_page.dart';
+
 class DiagnosisPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
@@ -14,71 +15,77 @@ class DiagnosisPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context); // لجعل زر العودة يعمل
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                  )
-                ],
-              ),
-              Image.asset("Photos/gradLogo1.png",
-              width: 400,
-              height: 400),
-              const SizedBox(height: 10),
-              TextField(
+          child: SingleChildScrollView( // 🔹 إضافة ScrollView
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context); // لجعل زر العودة يعمل
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                    ),
+                  ],
+                ),
+                Image.asset(
+                  "Photos/gradLogo1.png",
+                  width: 400, // 🔹 تصغير الحجم قليلاً حتى لا يأخذ مساحة زائدة
+                  height: 400,
+                ),
+                const SizedBox(height: 20),
+                TextField(
                   controller: nameController,
                   textAlign: TextAlign.end,
                   decoration: const InputDecoration(
-                    hintText:  'اسم المريض',
-                    hintStyle: TextStyle( 
+                    hintText: 'اسم المريض',
+                    hintStyle: TextStyle(
                       fontFamily: "Alexandria",
                       color: Color.fromARGB(255, 96, 96, 96),
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 25),
-              TextField(
-                controller: ageController,
+                const SizedBox(height: 25),
+                TextField(
+                  controller: ageController,
                   textAlign: TextAlign.end,
                   decoration: const InputDecoration(
                     hintText: "السن",
-                    hintStyle: TextStyle( 
+                    hintStyle: TextStyle(
                       fontFamily: "Alexandria",
                       color: Color.fromARGB(255, 96, 96, 96),
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  
                 ),
-              ),
-              const SizedBox(height: 70),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [  const Text('(اختياري)',
-                 style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: "Alexandria"
-                )),
-                const SizedBox(width: 20),
-              ElevatedButton(
+                const SizedBox(height: 50), // 🔹 تصغير المسافة قليلاً
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text(
+                      '(اختياري)',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Alexandria",
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
                       onPressed: () {
-                      Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(builder: (BuildContext context) {
-                            return const ImageUploadPage();
+                            return ImageUploadPage(); // 🔹 إزالة الـ const
                           }),
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 16), // تصغير حجم الزر
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 16), // تصغير حجم الزر
                         backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -86,50 +93,53 @@ class DiagnosisPage extends StatelessWidget {
                       ),
                       child: const Row(
                         children: [
-                          Icon(Icons.add_a_photo_rounded,
-                          color: Colors.white,),
-                           SizedBox(width: 10),
+                          Icon(
+                            Icons.add_a_photo_rounded,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 10),
                           Text(
                             'إضافة صورة',
                             style: TextStyle(
                               color: Colors.white,
-                              fontFamily:"Alexandria"
-                              ),
+                              fontFamily: "Alexandria",
+                            ),
                           ),
                         ],
                       ),
-                    
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                ),
+                const SizedBox(height: 30), // 🔹 استبدال Spacer بـ SizedBox
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return QuestionsPage(); // 🔹 إزالة الـ const
+                      }),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: Colors.blue, // لون الزر الأزرق
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  const SizedBox(width: 8),
-                
-                ],
-              ),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return const QuestionsPage();
-                          }),
-                        );
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.blue, // لون الزر الأزرق
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  child: const Text(
+                    'التالي',
+                    style: TextStyle(
+                      fontFamily: "Alexandria",
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                child: const Text(
-                  'التالي',
-                style: TextStyle(
-                fontFamily: "Alexandria",
-                fontSize: 20,
-                  color: Colors.white)
-                ),
-              ),
-            ],
+                const SizedBox(height: 20), // 🔹 إضافة مسافة لمنع الالتصاق بالحافة
+              ],
+            ),
           ),
         ),
       ),

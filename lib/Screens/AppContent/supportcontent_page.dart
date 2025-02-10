@@ -88,7 +88,7 @@ class SupportContentPage extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 50),
             RichText(
               textAlign: TextAlign.right,
               text: TextSpan(

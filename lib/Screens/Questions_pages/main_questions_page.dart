@@ -12,39 +12,29 @@ class QuestionsPage extends StatelessWidget {
         toolbarHeight: 80,
         backgroundColor: Colors.white,
         centerTitle: true,
-         title: SizedBox(
+          title: SizedBox(
           height: 100,
           width: 100,
           child: Image.asset("Photos/gradLogo1.png"), // استبدل بمسار الصورة الخاص بك
         ),
-     
       ),
       body: ListView(
         padding: const EdgeInsets.all(10),
         children: [
           
-   Container(
-  decoration: BoxDecoration( // لون الخلفية اللبني
-    border: Border.all(
-      color: Colors.blue, // لون الحواف الزرقاء
-      width: 2.0, // سمك الحواف
-    ),
-    borderRadius: BorderRadius.circular(8), // جعل الحواف مستديرة إذا كنت تريد
-  ),
-  padding: const EdgeInsets.all(10), // مسافة بين النص والحواف
-  child: const Text(
+ const Text(
     'الأسئلة',
     style: TextStyle(
       fontFamily: "Alexandria",
-      fontSize: 17, // حجم الخط الكبير
+      fontSize: 20, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       color: Colors.blue, // لون الخط أسود
     ),
     textAlign: TextAlign.center, // جعل النص في المنتصف
   ),
-),
 
-          const SizedBox(height: 40), // مسافة بين النص والقائمة
+
+          const SizedBox(height: 50), // مسافة بين النص والقائمة
           _buildListTile(context, 'السلوكيات التكرارية أو المقيدة' ,  const RepetitiveBehaviorsPage()),
           _buildListTile(context, 'التفاعل الاجتماعي',  const SocialInteractionPage()),
           _buildListTile(context, 'التواصل اللفظي وغير لفظي', const CommunicationPage()),
@@ -55,21 +45,28 @@ class QuestionsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(BuildContext context, String title, Widget nextPage) {
-    return ListTile(
-      title: Text(
+ Widget _buildListTile(BuildContext context, String title, Widget nextPage) {
+  return ListTile(
+    leading: const Icon(Icons.arrow_back_ios, color: Colors.black), // 🔹 سهم على اليسار
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => nextPage),
+      );
+    },
+    title: Align(
+      alignment: Alignment.topRight, // 🔹 محاذاة النص إلى أقصى اليمين
+      child: Text(
         title,
-        style: const TextStyle(fontFamily: "Alexandria",fontSize: 15, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontFamily: "Alexandria",
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-      trailing: const Icon(Icons.arrow_back_ios, color: Colors.black), // سهم باتجاه اليمين
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => nextPage),
-        );
-      },
-    );
-  }
+    ),
+  );
+}
 }
 
 // Placeholder pages
@@ -91,7 +88,7 @@ class ChoiceButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
           color: isSelected ? Colors.blue : Colors.grey[200],
           borderRadius: BorderRadius.circular(8),
@@ -100,7 +97,7 @@ class ChoiceButton extends StatelessWidget {
           text,
           style: TextStyle(
             color: isSelected ? Colors.white : Colors.black,
-            fontSize: 20,
+            fontSize: 14  ,
             fontFamily: "Alexandria",
           ),
         ),
@@ -125,7 +122,7 @@ class _RepetitiveBehaviorsPageState extends State<RepetitiveBehaviorsPage> {
         backgroundColor: Colors.white,
         title: const Text('السلوكيات التكرارية أو المقيدة',style:TextStyle(
           fontFamily: "Alexandria",
-      fontSize: 24.0, // حجم الخط الكبير
+      fontSize: 17, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       color: Colors.blue,
         ) ,),
@@ -139,37 +136,37 @@ class _RepetitiveBehaviorsPageState extends State<RepetitiveBehaviorsPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 30,),
+              const SizedBox(height: 60),
               buildQuestion(
                 0,
                 "هل ينشغل الطفل بلعبة معينة ويترك باقي الألعاب؟",
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 90),
               buildQuestion(
                 1,
                 "هل يستخدم الطفل الألعاب بطريقة نمطية بصورة متكررة؟",
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 90),
               buildQuestion(
                 2,
                 "هل يصدر الطفل أصواتًا حادة؟",
                 
-              ), const SizedBox(height: 50),
+              ), const SizedBox(height: 90),
                  buildQuestion(
                 3,
                 "هل يقوم الطفل بالرفرفة بيده الى الامام او الجانبين؟",
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 90),
               buildQuestion(
                 4,
                 "هل يستمر الطفل بعمل سلوكيات محددة اذا ترك بمفرده؟",
                 
               ),
-               const SizedBox(height: 50),
+               const SizedBox(height: 90),
                  buildQuestion(
                 5,
                 "هل يتبع الطفل سلوكيات بطقوس معينة؟",
-              ), const SizedBox(height: 40,),
+              ), const SizedBox(height: 90,),
                ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -190,7 +187,7 @@ class _RepetitiveBehaviorsPageState extends State<RepetitiveBehaviorsPage> {
                   'التالي',
                 style: TextStyle(
                 fontFamily: "Alexandria",
-                fontSize: 20,
+                fontSize: 10,
                   color: Colors.white)
                 ),
               ),
@@ -208,14 +205,15 @@ class _RepetitiveBehaviorsPageState extends State<RepetitiveBehaviorsPage> {
       children: [
         Text(
           questionText,
+          textAlign: TextAlign.center,
           style: const TextStyle(
              fontFamily: "Alexandria",
-      fontSize: 20, // حجم الخط الكبير
+      fontSize: 15, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       
           ),
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 30),
         
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -255,7 +253,7 @@ class _SocialInteractionPageState extends State<SocialInteractionPage> {
         backgroundColor:  Colors.white,
         title: const Text('التفاعل الاجتماعي',style:TextStyle(
           fontFamily: "Alexandria",
-      fontSize: 24.0, // حجم الخط الكبير
+      fontSize: 17, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       color: Colors.blue,
         ) ,),
@@ -269,37 +267,37 @@ class _SocialInteractionPageState extends State<SocialInteractionPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 25,),
+              const SizedBox(height: 60,),
               buildQuestion(
                 0,
                 "هل يعجز الطفل عن بدء الحديث مع الأخرين؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 1,
                 "هل الطفل غير قادر علي تقليد الأشخاص؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 2,
                 "هل يظهر الطفل سعادة محدودة عند التفاعل؟",
                 
-              ), const SizedBox(height: 25),
+              ), const SizedBox(height: 90),
                  buildQuestion(
                 3,
                 "هل يفشل الطفل في تكوين صداقات أو الحفاظ عليها؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 4,
                 "هل يظهر الطفل إهتمام محدود للأخرين أو يتجاهل وجود الأشخاص؟",
                 
               ),
-               const SizedBox(height: 25),
+               const SizedBox(height: 90),
                  buildQuestion(
                 5,
                 "هل يبدي الطفل عدم إستجابة عندما يحاول الأخرين التفاعل معه؟",
-              ), const SizedBox(height: 35,),
+              ), const SizedBox(height: 90,),
                ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -320,7 +318,7 @@ class _SocialInteractionPageState extends State<SocialInteractionPage> {
                   'التالي',
                 style: TextStyle(
                 fontFamily: "Alexandria",
-                fontSize: 20,
+                fontSize: 10,
                   color: Colors.white)
                 ),
               ),
@@ -338,14 +336,15 @@ class _SocialInteractionPageState extends State<SocialInteractionPage> {
       children: [
         Text(
           questionText,
+            textAlign: TextAlign.center,
           style: const TextStyle(
              fontFamily: "Alexandria",
-      fontSize: 20, // حجم الخط الكبير
+      fontSize: 15, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
         
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -384,7 +383,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
         backgroundColor: Colors.white,
         title: const Text('التواصل اللفظي وغير اللفظي',style:TextStyle(
           fontFamily: "Alexandria",
-      fontSize: 24.0, // حجم الخط الكبير
+      fontSize: 17, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       color: Colors.blue,
         ) ,),
@@ -398,37 +397,37 @@ class _CommunicationPageState extends State<CommunicationPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 25,),
+              const SizedBox(height: 60,),
               buildQuestion(
                 0,
                 "هل يقوم الطفل بترديد الكلام بشكل متكرر؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 1,
                 "هل تلاحظ أن الطفل لا يفهم كثير من الكلمات عند الحديث معه؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 2,
                 "هل تلاحظ أن الطفل لا يستطيع فهم المغزى من الحديث أو استيعاب نوايا المتحدث؟",
                 
-              ), const SizedBox(height: 25),
+              ), const SizedBox(height: 90),
                  buildQuestion(
                 3,
                 "هل يستطيع الطفل إبداء تعبيرات وجهية تعكس مشاعره؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 4,
                 "هل تلاحظ أن الطفل لا ينتظر دوره في الحديث ويقاطع الكلام أحياناً؟",
                 
               ),
-               const SizedBox(height: 25),
+               const SizedBox(height: 90),
                  buildQuestion(
                 5,
                 "هل يستطيع الطفل فهم تعبيرات الوجه لدي الأشخاص؟",
-              ), const SizedBox(height: 35,),
+              ), const SizedBox(height: 90,),
                ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -449,7 +448,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                   'التالي',
                 style: TextStyle(
                 fontFamily: "Alexandria",
-                fontSize: 20,
+                fontSize: 10,
                   color: Colors.white)
                 ),
               ),
@@ -467,14 +466,15 @@ class _CommunicationPageState extends State<CommunicationPage> {
       children: [
         Text(
           questionText,
+           textAlign: TextAlign.center,
           style: const TextStyle(
              fontFamily: "Alexandria",
-      fontSize: 20, // حجم الخط الكبير
+      fontSize: 15, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
         
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -513,7 +513,7 @@ class _SelfCarePageState extends State<SelfCarePage> {
         backgroundColor: Colors.white,
         title: const Text('العناية بالذات',style:TextStyle(
           fontFamily: "Alexandria",
-      fontSize: 24.0, // حجم الخط الكبير
+      fontSize: 17, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       color: Colors.blue,
         ) ,),
@@ -527,42 +527,42 @@ class _SelfCarePageState extends State<SelfCarePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 25,),
+              const SizedBox(height: 50),
               buildQuestion(
                 0,
                 "هل يستطيع الطفل إرتداء ملابسه بمفرده؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 1,
                 "هل يعتني الطفل بنظافته الشخصية؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 2,
                 "هل الطفل غير قادر علي التنقل بمفرده؟",
                 
-              ), const SizedBox(height: 25),
+              ), const SizedBox(height: 90),
                  buildQuestion(
                 3,
                 "هل تلاحظ أن الطفل معتمد علي الأخرين بشكل كلي؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 4,
                 "هل الطفل قادر علي إدراك الوقت أو المال؟",
                 
               ),
-               const SizedBox(height: 25),
+               const SizedBox(height: 90),
                  buildQuestion(
                 5,
                 "هل الطفل يقوم بغسل يديه (مثلا بعد تناول الطعام)؟",
-              ), const SizedBox(height: 35,) ,
-               const SizedBox(height: 25),
+              ),
+               const SizedBox(height: 90),
                  buildQuestion(
                 6,
                 "هل تلاحظ أن الطفل لا يستطيع الإستقلالية في أغلب الأمور؟",
-              ), const SizedBox(height: 35,),
+              ), const SizedBox(height: 90,),
                ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -583,7 +583,7 @@ class _SelfCarePageState extends State<SelfCarePage> {
                   'التالي',
                 style: TextStyle(
                 fontFamily: "Alexandria",
-                fontSize: 20,
+                fontSize: 10,
                   color: Colors.white)
                 ),
               ),
@@ -601,14 +601,15 @@ class _SelfCarePageState extends State<SelfCarePage> {
       children: [
         Text(
           questionText,
+           textAlign: TextAlign.center,
           style: const TextStyle(
              fontFamily: "Alexandria",
-      fontSize: 20, // حجم الخط الكبير
+      fontSize: 15, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
         
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -647,7 +648,7 @@ class _AttentionPageState extends State<AttentionPage> {
         backgroundColor: Colors.white,
         title: const Text('الانتباه',style:TextStyle(
           fontFamily: "Alexandria",
-      fontSize: 24.0, // حجم الخط الكبير
+      fontSize: 17, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       color: Colors.blue,
         ) ,),
@@ -661,37 +662,37 @@ class _AttentionPageState extends State<AttentionPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 25,),
+              const SizedBox(height: 50,),
               buildQuestion(
                 0,
                 "هل تلاحظ أن الطفل لا يستطيع التنقل ببصره بين شيئين؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 1,
                 "هل تلاحظ أن الطفل غير منتبه للأشياء المحيطة به؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 2,
                 "هل تلاحظ أن الطفل لا يستطيع التنقل ببصره بين شخص وشئ؟",
                 
-              ), const SizedBox(height: 25),
+              ), const SizedBox(height: 90),
                  buildQuestion(
                 3,
                 "هل تلاحظ أن الطفل لا يستطيع أن يتنقل ببصره بين شخص وشئين؟",
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 90),
               buildQuestion(
                 4,
                 "هل تلاحظ أن الطفل لا يستطيع النظر في عينيك أثناء حديثك معه؟",
                 
               ),
-               const SizedBox(height: 25),
+               const SizedBox(height: 90),
                  buildQuestion(
                 5,
                 "هل تلاحظ إذا حدث أي شئ بسيط قد يخرج الطفل عن تركيزه ويصيب بتشتت؟",
-              ), const SizedBox(height: 35,),
+              ), const SizedBox(height: 90,),
                ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -712,7 +713,7 @@ class _AttentionPageState extends State<AttentionPage> {
                   'التالي',
                 style: TextStyle(
                 fontFamily: "Alexandria",
-                fontSize: 20,
+                fontSize: 10,
                   color: Colors.white)
                 ),
               ),
@@ -730,14 +731,15 @@ class _AttentionPageState extends State<AttentionPage> {
       children: [
         Text(
           questionText,
+           textAlign: TextAlign.center,
           style: const TextStyle(
              fontFamily: "Alexandria",
-      fontSize: 20, // حجم الخط الكبير
+      fontSize: 15, // حجم الخط الكبير
       fontWeight: FontWeight.bold, // جعل الخط عريض
       
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
         
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

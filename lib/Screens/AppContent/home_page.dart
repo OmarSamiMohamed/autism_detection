@@ -31,12 +31,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
+        preferredSize: const Size.fromHeight(50),
         child: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           elevation: 0,
           leading: IconButton(
-            iconSize: 34,
+            iconSize: 40,
             icon: const Icon(Icons.notifications_none_outlined, color: Colors.black),
             onPressed: () {}, // الإجراء عند الضغط
           ),
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const Text(
-                "!..أهلا بيك ",
+                "!..أهلا بك ",
                 style: TextStyle(
                   fontFamily: "Alexandria",
                   color: Colors.blue,
@@ -111,9 +111,9 @@ class HomeContent extends StatelessWidget {
           child: Transform.scale(
             scale: 1.45, // تكبير الصورة بنسبة 20% فوق حجمها الطبيعي
             child: Opacity(
-              opacity: 0.4, // شفافية الصورة
+              opacity: 0.5, // شفافية الصورة
               child: Image.asset(
-                'Photos/Logo.png',
+                'Photos/gradLogo.png',
                 fit: BoxFit.cover, // يجعل الصورة تغطي الشاشة بالكامل
               ),
             ),
@@ -132,21 +132,29 @@ class HomeContent extends StatelessWidget {
                   }));
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[200],
-                  padding: const EdgeInsets.symmetric(horizontal: 63, vertical: 27),
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(color: Colors.grey.shade400),
                   ),
                 ),
-                child: const Text(
-                  'تشخيص',
-                  style: TextStyle(
-                    fontFamily: "Alexandria",
-                    color: Colors.blue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
+                child: Row(
+                     mainAxisSize: MainAxisSize.min,
+                  children: [ 
+                    Icon(Icons.zoom_in,
+                  size: 30,
+                          color: Colors.white,),
+                           SizedBox(width: 10),
+                    const Text(
+                      'تشخيص',
+                      style: TextStyle(
+                        fontFamily: "Alexandria",
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 50),
@@ -157,21 +165,29 @@ class HomeContent extends StatelessWidget {
                   }));
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[200],
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 28),
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(color: Colors.grey.shade400),
+                    
                   ),
                 ),
-                child: const Text(
-                  'دعم ونصائح',
-                  style: TextStyle(
-                    fontFamily: "Alexandria",
-                    color: Colors.blue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [ Icon(Icons.contact_support,
+                  size: 30,
+                          color: Colors.white,),
+                           SizedBox(width: 10),
+                    const Text(
+                      'دعم ونصائح',
+                      style: TextStyle(
+                        fontFamily: "Alexandria",
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -244,12 +260,12 @@ class _ChatBotPageState extends State<ChatBotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
+        toolbarHeight: 115,
         backgroundColor: Colors.blue,
         centerTitle: true,
         title: SizedBox(
-          height: 70,
-          width: 70,
+          height: 130,
+          width: 130,
           child: Image.asset("Photos/gradLogo1.png"), // استبدل بمسار الصورة الخاص بك
         ),
       ),
