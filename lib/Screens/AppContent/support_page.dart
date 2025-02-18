@@ -28,27 +28,27 @@ class SupportPage extends StatelessWidget {
         'صفحة الدعم والارشادات',
         style: TextStyle(
           fontFamily: "Alexandria",
-          fontSize: 33, // حجم الخط الكبير
+          fontSize: 25, // حجم الخط الكبير
           fontWeight: FontWeight.bold, // جعل الخط عريض
           color: Colors.blue, // لون الخط أسود
         ),
         textAlign: TextAlign.center, // جعل النص في المنتصف
       ),
-       const SizedBox(height: 89,),
+       const SizedBox(height: 150),
        Padding(
          padding: const EdgeInsets.all(10.0),
          child: const Text(
           "مرحبًا بكم في صفحة الدعم والإرشادات التي تقدم معلومات ونصائح موجهة لذوي الهمم. سنتناول هنا بعض التحديات التي قد تواجههم، مع اقتراح طرق لمساعدتهم في التغلب عليها.",
           style: TextStyle(
             fontFamily: "Alexandria",
-            fontSize: 20, // حجم الخط الكبير
+            fontSize: 17, // حجم الخط الكبير
             fontWeight: FontWeight.normal, // جعل الخط عريض
             color: Colors.black, // لون الخط أسود
           ),
           textAlign: TextAlign.center, // جعل النص في المنتصف
                ),
        ),
-       const SizedBox(height: 300,),
+       const SizedBox(height: 270),
                ElevatedButton(
                 onPressed: () {
                     Navigator.push(
@@ -60,7 +60,7 @@ class SupportPage extends StatelessWidget {
              
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 60),
+                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 50),
                   backgroundColor: Colors.blue, // لون الزر الأزرق
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -83,7 +83,7 @@ class SupportPage extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(BuildContext context, String title, Widget nextPage) {
+  Widget buildListTile(BuildContext context, String title, Widget nextPage) {
     return ListTile(
       title: Text(
         title,

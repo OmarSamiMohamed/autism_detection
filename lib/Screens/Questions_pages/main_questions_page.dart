@@ -332,7 +332,7 @@ class _SocialInteractionPageState extends State<SocialInteractionPage> {
 
   Widget buildQuestion(int questionIndex, String questionText) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           questionText,
@@ -462,7 +462,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
 
   Widget buildQuestion(int questionIndex, String questionText) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           questionText,
@@ -597,7 +597,7 @@ class _SelfCarePageState extends State<SelfCarePage> {
 
   Widget buildQuestion(int questionIndex, String questionText) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           questionText,
@@ -727,7 +727,7 @@ class _AttentionPageState extends State<AttentionPage> {
 
   Widget buildQuestion(int questionIndex, String questionText) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           questionText,

@@ -82,7 +82,7 @@ class SupportContentPage extends StatelessWidget {
               title, // العنوان هنا
               style: TextStyle(
                 fontFamily: "Alexandria",
-                fontSize: 35,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
