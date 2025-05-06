@@ -167,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     IconButton(
                     icon: Image.asset(
-    "Photos/google-play.png",
+    "Photos/google.png",
     width: 44, // عرض الأيقونة
     height: 44, // ارتفاع الأيقونة
   ),

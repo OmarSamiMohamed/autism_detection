@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
             label: 'Settings',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_outlined),
+            icon: Icon(Icons.account_circle),
             label: 'Menu',
           ),
           BottomNavigationBarItem(
@@ -201,33 +201,40 @@ class HomeContent extends StatelessWidget {
 
 // صفحة الإعدادات
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('الإعدادات',
+   appBar: AppBar(
+  backgroundColor: Colors.blue, // لون شريط العنوان
+  centerTitle: true, // يضمن تمركز العنوان في المنتصف
+  title: Row(
+    mainAxisSize: MainAxisSize.min, // يمنع الامتداد إلى الجوانب
+    children: [
+      Icon(Icons.settings), // أيقونة الإعدادات
+      SizedBox(width: 8), // مسافة بين الأيقونة والنص
+      Text(
+        'الإعدادات',
         style: TextStyle(
-          fontFamily: "Alexandria"
-        ),),
-        backgroundColor: Colors.blue, // لون شريط العنوان
+          fontFamily: "Alexandria",
+          fontSize: 20,
+        ),
       ),
+    ],
+  ),
+),
+backgroundColor: Colors.white,
+
       body: ListView(
         children: [
-          // زر 1
-          ListTile(
-            leading: Icon(Icons.person), // أيقونة
-            title: Text('الحساب'), // نص الزر
-            onTap: () {
-              // ما يحدث عند الضغط
-              print('تم الضغط على الحساب');
-            },
-          ),
-          Divider(), // خط فاصل بين الخيارات
-
-          // زر 2
+      
           ListTile(
             leading: Icon(Icons.notifications),
-            title: Text('الإشعارات'),
+            title: Text('الإشعارات', style: TextStyle(
+          fontFamily: "Alexandria",
+          fontSize: 15
+        ),),
             onTap: () {
               print('تم الضغط على الإشعارات');
             },
@@ -237,7 +244,11 @@ class SettingsPage extends StatelessWidget {
           // زر 3
           ListTile(
             leading: Icon(Icons.lock),
-            title: Text('الخصوصية'),
+            title: Text('الخصوصية' ,style: TextStyle(
+          fontFamily: "Alexandria"
+          ,
+          fontSize: 15
+        ),),
             onTap: () {
               print('تم الضغط على الخصوصية');
             },
@@ -246,8 +257,11 @@ class SettingsPage extends StatelessWidget {
 
           // زر 4
           ListTile(
-            leading: Icon(Icons.help),
-            title: Text('المساعدة'),
+            leading: Icon(Icons.support_agent),
+            title: Text('المساعدة', style: TextStyle(
+          fontFamily: "Alexandria",
+          fontSize: 15
+        ),),
             onTap: () {
               print('تم الضغط على المساعدة');
             },
@@ -258,29 +272,88 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: SettingsPage(),
-  ));
-}
-
 // صفحة القائمة
 class MenuPage extends StatelessWidget {
-  const MenuPage({super.key});
+  const MenuPage ({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Menu Page', style: TextStyle(fontSize: 24)),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue, // لون شريط العنوان
+        centerTitle: true, // يضمن تمركز العنوان في المنتصف
+        title: Row(
+          mainAxisSize: MainAxisSize.min, // يمنع الامتداد إلى الجوانب
+          children: [
+            Icon(Icons.account_circle), // أيقونة الإعدادات
+            SizedBox(width: 8), // مسافة بين الأيقونة والنص
+            Text(
+          "الحساب",
+              style: TextStyle(
+                fontFamily: "Alexandria",
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: ListView(
+        children: [
+          // تغيير البريد الإلكتروني
+          ListTile(
+            leading: Icon(Icons.email), // أيقونة البريد الإلكتروني
+            title: Text(
+              'تغيير البريد الإلكتروني',
+              style: TextStyle(
+                fontFamily: "Alexandria",
+                fontSize: 15,
+              ),
+            ),
+            onTap: () {
+              print('تم الضغط على تغيير البريد الإلكتروني');
+            },
+          ),
+          Divider(), // خط فاصل
+
+          // تغيير كلمة السر
+          ListTile(
+            leading: Icon(Icons.lock), // أيقونة القفل
+            title: Text(
+              'تغيير كلمة السر',
+              style: TextStyle(
+                fontFamily: "Alexandria",
+                fontSize: 15,
+              ),
+            ),
+            onTap: () {
+              print('تم الضغط على تغيير كلمة السر');
+            },
+          ),
+          Divider(),
+
+          // التقرير
+          ListTile(
+            leading: Icon(Icons.article), // أيقونة التقرير
+            title: Text(
+              'التقرير',
+              style: TextStyle(
+                fontFamily: "Alexandria",
+                fontSize: 15,
+              ),
+            ),
+            onTap: () {
+              print('تم الضغط على التقرير');
+            },
+          ),
+        ],
+      ),
     );
   }
 }
 
 // صفحة شات بوت
  // استبدل باسم مشروعك
-
-
 
 
 class ChatBotPage extends StatefulWidget {
@@ -291,12 +364,12 @@ class ChatBotPage extends StatefulWidget {
 }
 
 class _ChatBotPageState extends State<ChatBotPage> {
-  final List<Map<String, String>> _messages = []; // قائمة الرسائل (نص + نوع المرسل)
+  final List<Map<String, String>> _messages = [];
   final TextEditingController _controller = TextEditingController();
-  bool _isLoading = false; // حالة تحميل الرد
+  bool _isLoading = false;
 
   void _sendMessage() async {
-    if (_controller.text.isEmpty) return;
+    if (_controller.text.trim().isEmpty) return;
 
     String userMessage = _controller.text;
     setState(() {
@@ -306,6 +379,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
     });
 
     String botResponse = await GeminiService.sendMessage(userMessage);
+
+    if (!mounted) return;
 
     setState(() {
       _messages.insert(0, {"sender": "bot", "text": botResponse});
@@ -323,72 +398,78 @@ class _ChatBotPageState extends State<ChatBotPage> {
         title: SizedBox(
           height: 70,
           width: 70,
-          child: Image.asset("Photos/gradLogo1.png"), // استبدل بمسار الصورة الخاص بك
+          child: Image.asset("Photos/gradLogo1.png"), // الاحتفاظ بمسار الصورة كما هو
         ),
       ),
       body: Container(
-        color: Colors.white, // تغيير خلفية الصفحة إلى الأبيض
+        color: Colors.white,
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                reverse: true,
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  final message = _messages[index];
-                  return Align(
-                    alignment: message["sender"] == "user"
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        mainAxisAlignment: message["sender"] == "user"
-                            ? MainAxisAlignment.end
-                            : MainAxisAlignment.start,
-                        children: [
-                          if (message["sender"] == "bot") ...[
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  AssetImage("Photos/gradLogo.png"), // صورة الشات بوت
-                            ),
-                            const SizedBox(width: 10), // مسافة بين الصورة والنص
-                          ],
-                          Flexible(
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 10),
-                              decoration: BoxDecoration(
-                                color: message["sender"] == "user"
-                                    ? Colors.blue[100]
-                                    : Colors.grey[300],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                message["text"]!,
-                                style: const TextStyle(fontSize: 16),
-                              ),
+              child: _messages.isEmpty
+                  ? const Center(child: Text("لا توجد رسائل بعد",
+                    style: TextStyle(
+                fontFamily: "Alexandria",
+                fontSize: 10,
+              ),))
+                  : ListView.builder(
+                      reverse: true,
+                      itemCount: _messages.length,
+                      itemBuilder: (context, index) {
+                        final message = _messages[index];
+                        return Align(
+                          alignment: message["sender"] == "user"
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Row(
+                              mainAxisAlignment: message["sender"] == "user"
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
+                              children: [
+                                if (message["sender"] == "bot") ...[
+                                  const CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: AssetImage(
+                                        "Photos/gradLogo.png"), // الاحتفاظ بمسار الصورة كما هو
+                                  ),
+                                  const SizedBox(width: 10),
+                                ],
+                                Flexible(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 10),
+                                    decoration: BoxDecoration(
+                                      color: message["sender"] == "user"
+                                          ? Colors.blue[100]
+                                          : Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Text(
+                                      message["text"]!,
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                                if (message["sender"] == "user") ...[
+                                  const SizedBox(width: 10),
+                                  const CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: Colors.blue,
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                           ),
-                          if (message["sender"] == "user") ...[
-                            const SizedBox(width: 10), // مسافة بين النص والأيقونة
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor: Colors.blue,
-                              child: const Icon(
-                                Icons.person,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
             if (_isLoading)
               const Padding(
@@ -402,12 +483,13 @@ class _ChatBotPageState extends State<ChatBotPage> {
                   Expanded(
                     child: TextField(
                       controller: _controller,
+                      onChanged: (text) => setState(() {}),
                       decoration: InputDecoration(
                         hintText: 'أرسل رسالة....',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                             fontFamily: "Alexandria", fontSize: 13),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20), // جعل الحواف دائرية
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 10,
@@ -418,7 +500,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.send, color: Colors.blue),
-                    onPressed: _sendMessage,
+                    onPressed: _controller.text.trim().isEmpty ? null : _sendMessage,
                   ),
                 ],
               ),
@@ -429,4 +511,3 @@ class _ChatBotPageState extends State<ChatBotPage> {
     );
   }
 }
-

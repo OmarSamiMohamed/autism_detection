@@ -615,7 +615,7 @@ class _SelfCarePageState extends State<SelfCarePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(4, (optionIndex) {
             return ChoiceButton(
-              text: ["نعم", "أحيانًا", "نادرًا", "لا"][optionIndex],
+              text: ["لا", "نادرا", "أحيانًا", "نعم"][optionIndex],
               isSelected: selectedAnswers[questionIndex] == optionIndex,
               onTap: () {
                 setState(() {
