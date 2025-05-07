@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:autism_detection/Screens/AppContent/result_page.dart';
+import 'package:autism_detection/Screens/home/result_page.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 

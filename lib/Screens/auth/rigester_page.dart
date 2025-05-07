@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:autism_detection/Screens/Login&register%20page/R_verify.dart';
+import 'package:autism_detection/Screens/auth/r_verify.dart';
 
 
 class RegisterPage extends StatefulWidget {
@@ -100,6 +100,38 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     hintText: 'كلمة السر',
+                    hintStyle: const TextStyle(
+                      fontFamily: "Alexandria",
+                      color: Color.fromARGB(255, 96, 96, 96),
+                      fontSize: 19,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    prefixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: const Color.fromARGB(255, 57, 57, 57),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                  ),
+                ),    const SizedBox(height: 20),
+
+                // حقل كلمة السر مع خيار الإظهار/الإخفاء
+                TextField(
+                  controller: _passwordController,
+                  textAlign: TextAlign.end,
+                  obscureText: !_isPasswordVisible,
+                  decoration: InputDecoration(
+                    hintText: 'تأكيد كلمة السر',
                     hintStyle: const TextStyle(
                       fontFamily: "Alexandria",
                       color: Color.fromARGB(255, 96, 96, 96),

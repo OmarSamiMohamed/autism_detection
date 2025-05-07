@@ -1,13 +1,69 @@
+import 'package:autism_detection/Screens/auth/pass_change.dart';
 import 'package:flutter/material.dart';
-import 'package:autism_detection/Screens/Login&register%20page/PassChangeSuccess.dart';
 
-class ForgetVerificationScreen extends StatelessWidget {
-  ForgetVerificationScreen({super.key});
+class ForgetVerificationScreen extends StatefulWidget {
+  const ForgetVerificationScreen({super.key});
 
+  @override
+  State<ForgetVerificationScreen> createState() => _ForgetVerificationScreenState();
+}
+
+class _ForgetVerificationScreenState extends State<ForgetVerificationScreen> {
   final List<TextEditingController> _codeControllers = List.generate(
     4,
     (index) => TextEditingController(),
   );
+
+  @override
+  void dispose() {
+    // ضروري تفضي الكنترولات لما الصفحة تتقفل
+    for (var controller in _codeControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  Widget _buildCodeField(int index) {
+    return SizedBox(
+      width: 50,
+      child: TextField(
+        controller: _codeControllers[index],
+        textAlign: TextAlign.center,
+        maxLength: 1,
+        keyboardType: TextInputType.number,
+        onChanged: (value) {
+          if (value.isNotEmpty && index < 3) {
+            FocusScope.of(context).nextFocus(); // يروح للخانة اللي بعدها
+          } else if (value.isEmpty && index > 0) {
+            FocusScope.of(context).previousFocus(); // يرجع للخانة اللي قبلها
+          }
+        },
+        decoration: const InputDecoration(
+          counterText: '',
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _goToNextPage() {
+    String code = _codeControllers.map((e) => e.text).join();
+    if (code.length < 4) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("من فضلك أدخل رمز مكون من 4 أرقام")),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const PassChange()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +96,9 @@ class ForgetVerificationScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              ' تم إرسال رمز تحقق مكون من أربعة أرقام إلى\nحساب ******gmail.com (أدخل الرقم في الخانة)'
-              
-              ,
+              'تم إرسال رمز تحقق مكون من أربعة أرقام إلى\nحساب ******gmail.com (أدخل الرقم في الخانة)',
               textAlign: TextAlign.center,
               style: TextStyle(
-
                 fontFamily: "Alexandria",
                 fontSize: 16,
                 color: Colors.grey,
@@ -54,10 +107,7 @@ class ForgetVerificationScreen extends StatelessWidget {
             const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(
-                4,
-                (index) => _buildCodeField(index),
-              ),
+              children: List.generate(4, (index) => _buildCodeField(index)),
             ),
             const SizedBox(height: 22),
             Row(
@@ -73,7 +123,7 @@ class ForgetVerificationScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    // أعد إرسال الكود هنا
+                    // هنا ممكن تبعت الكود تاني
                   },
                   child: const Text(
                     'لم يصلك الرمز؟',
@@ -94,12 +144,7 @@ class ForgetVerificationScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 33),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext content){
-                      return const PasswordChangedSuccessPage();
-                    }));
-                  },
-                  
+                  onPressed: _goToNextPage,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 49, 161, 253),
                     shape: RoundedRectangleBorder(
@@ -119,27 +164,6 @@ class ForgetVerificationScreen extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCodeField(int index) {
-    return SizedBox(
-      width: 50,
-      child: TextField(
-        controller: _codeControllers[index],
-        textAlign: TextAlign.center,
-        maxLength: 1,
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          counterText: '',
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue),
-          ),
         ),
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:autism_detection/Screens/AppContent/home_page.dart';
+import 'package:autism_detection/Screens/home/home_page.dart';
 import 'Rigester_page.dart';
 import 'forgetpass_page.dart';
 

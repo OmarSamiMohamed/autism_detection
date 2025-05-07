@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:autism_detection/Screens/AppContent/photo_upload.dart';
+import 'package:autism_detection/Screens/home/photo_upload_page.dart';
 import 'package:autism_detection/Screens/Questions_pages/main_questions_page.dart';
 
 class DiagnosisPage extends StatelessWidget {
@@ -11,11 +11,11 @@ class DiagnosisPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // لون الخلفية من الصورة
+      backgroundColor: Colors.white, 
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: SingleChildScrollView( // 🔹 إضافة ScrollView
+          child: SingleChildScrollView( 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -23,7 +23,7 @@ class DiagnosisPage extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.pop(context); // لجعل زر العودة يعمل
+                        Navigator.pop(context);
                       },
                       icon: const Icon(Icons.arrow_back),
                     ),
@@ -31,7 +31,7 @@ class DiagnosisPage extends StatelessWidget {
                 ),
                 Image.asset(
                   "Photos/gradLogo1.png",
-                  width: 400, // 🔹 تصغير الحجم قليلاً حتى لا يأخذ مساحة زائدة
+                  width: 400, 
                   height: 400,
                 ),
                 const SizedBox(height: 20),
@@ -62,7 +62,7 @@ class DiagnosisPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 50), // 🔹 تصغير المسافة قليلاً
+                const SizedBox(height: 50), 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -79,7 +79,7 @@ class DiagnosisPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (BuildContext context) {
-                            return ImageUploadPage(); // 🔹 إزالة الـ const
+                            return ImageUploadPage(); 
                           }),
                         );
                       },
@@ -137,7 +137,7 @@ class DiagnosisPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20), // 🔹 إضافة مسافة لمنع الالتصاق بالحافة
+                const SizedBox(height: 20), 
               ],
             ),
           ),

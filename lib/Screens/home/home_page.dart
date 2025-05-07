@@ -1,6 +1,6 @@
-import 'package:autism_detection/Screens/AppContent/support_page.dart';
+import 'package:autism_detection/Screens/home/support_page.dart';
 import 'package:flutter/material.dart';
-import 'package:autism_detection/Screens/AppContent/Diagnosis_page.dart';
+import 'package:autism_detection/Screens/home/diagnosis_page.dart';
 import 'package:autism_detection/gemini_service.dart';
 
 class HomePage extends StatefulWidget {

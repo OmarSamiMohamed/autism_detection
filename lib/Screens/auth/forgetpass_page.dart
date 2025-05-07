@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Forget_verifycode.dart';
+import 'forget_verify_code.dart';
 
 class ForgetPassPage extends StatelessWidget {
   ForgetPassPage({super.key});

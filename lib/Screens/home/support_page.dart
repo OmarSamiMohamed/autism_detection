@@ -1,4 +1,4 @@
-import 'package:autism_detection/Screens/AppContent/supportcontent_page.dart';
+import 'package:autism_detection/Screens/home/supportcontent_page.dart';
 import 'package:flutter/material.dart';
 
 
