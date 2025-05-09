@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:autism_detection/Screens/auth/r_verify.dart';
-
+import 'package:autism_detection/services/api_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,13 +10,17 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
   bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
+    return Scaffold(
+      appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -44,15 +48,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 50),
-
-                // حقل اسم المستخدم
                 TextField(
-                  controller: _usernameController,
+                  controller: _nameController,
                   textAlign: TextAlign.end,
                   decoration: InputDecoration(
                     hintText: 'اسم المستخدم',
                     hintStyle: const TextStyle(
-                    fontFamily: "Alexandria",
+                      fontFamily: "Alexandria",
                       color: Color.fromARGB(255, 96, 96, 96),
                       fontSize: 19,
                       fontWeight: FontWeight.w400,
@@ -69,8 +71,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                  TextField(
-                  controller: _usernameController,
+                TextField(
+                  controller: _emailController,
                   textAlign: TextAlign.end,
                   decoration: InputDecoration(
                     hintText: 'البريد الالكتروني',
@@ -91,9 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     fillColor: Colors.grey[200],
                   ),
                 ),
-                    const SizedBox(height: 20),
-
-                // حقل كلمة السر مع خيار الإظهار/الإخفاء
+                const SizedBox(height: 20),
                 TextField(
                   controller: _passwordController,
                   textAlign: TextAlign.end,
@@ -123,11 +123,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     filled: true,
                     fillColor: Colors.grey[200],
                   ),
-                ),    const SizedBox(height: 20),
-
-                // حقل كلمة السر مع خيار الإظهار/الإخفاء
+                ),
+                const SizedBox(height: 20),
                 TextField(
-                  controller: _passwordController,
+                  controller: _confirmPasswordController,
                   textAlign: TextAlign.end,
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
@@ -157,12 +156,39 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // زر تسجيل الدخول
                 ElevatedButton(
-                  onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (BuildContext content){
-                      return  RigesterVerificationScreen();
-                    }));
-                    // قم بإضافة عملية التحقق من بيانات الدخول هنا
+                  onPressed: () async {
+                    final name = _nameController.text.trim();
+                    final email = _emailController.text.trim();
+                    final password = _passwordController.text;
+                    final confirmPassword = _confirmPasswordController.text;
+
+                    if (password != confirmPassword) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('كلمة السر وتأكيدها غير متطابقين')),
+                      );
+                      return;
+                    }
+
+                    final token = await ApiService.registerUser(
+                      name: name,
+                      email: email,
+                      password: password,
+                      confirmPassword: confirmPassword,
+                    );
+
+                    if (token != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return RigesterVerificationScreen();
+                        }),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('فشل في التسجيل')),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
@@ -172,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   child: const Text(
-                          "التالي",
+                    "التالي",
                     style: TextStyle(
                       fontFamily: "Alexandria",
                       fontSize: 20,
@@ -182,7 +208,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 25),
-                // النص "أو"
                 const Text(
                   'أو',
                   style: TextStyle(
@@ -192,23 +217,20 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 13),
-
-                // أيقونات تسجيل الدخول عبر منصات أخرى
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                    icon: Image.asset(
-    "Photos/google.png",
-    width: 44, // عرض الأيقونة
-    height: 44, // ارتفاع الأيقونة
-  ),
-  iconSize: 30, // حجم أيقونة الزر، يمكن تغييره أيضًا
-  onPressed: () {
-    print("Button Pressed");
-  },
-),
-
+                      icon: Image.asset(
+                        "Photos/google.png",
+                        width: 44,
+                        height: 44,
+                      ),
+                      iconSize: 30,
+                      onPressed: () {
+                        print("Button Pressed");
+                      },
+                    ),
                     const SizedBox(width: 10),
                     IconButton(
                       iconSize: 55,
@@ -217,7 +239,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.blue,
                       ),
                       onPressed: () {
-                        // هنا يمكنك إضافة عملية تسجيل الدخول باستخدام حساب فيسبوك
+                        // تسجيل دخول فيسبوك
                       },
                     ),
                   ],

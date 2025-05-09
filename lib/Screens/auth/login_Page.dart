@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:autism_detection/Screens/home/home_page.dart';
 import 'Rigester_page.dart';
 import 'forgetpass_page.dart';
-
+import 'package:autism_detection/services/api_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
 
@@ -37,20 +37,21 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                // حقل اسم المستخدم
+
+                // حقل البريد الإلكتروني
                 TextField(
-                  controller: _usernameController,
+                  controller: _emailController,
                   textAlign: TextAlign.end,
                   decoration: InputDecoration(
-                    hintText: 'اسم المستخدم',
-                    hintStyle: const TextStyle( 
+                    hintText: 'البريد الإلكتروني',
+                    hintStyle: const TextStyle(
                       fontFamily: "Alexandria",
                       color: Color.fromARGB(255, 96, 96, 96),
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                     prefixIcon: const Icon(
-                      Icons.person,
+                      Icons.email,
                       color: Color.fromARGB(255, 96, 96, 96),
                     ),
                     border: OutlineInputBorder(
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 20),
 
-                // حقل كلمة السر مع خيار الإظهار/الإخفاء
+                // حقل كلمة السر
                 TextField(
                   controller: _passwordController,
                   textAlign: TextAlign.end,
@@ -100,16 +101,17 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                          return ForgetPassPage();
-                        }));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  ForgetPassPage()),
+                        );
                       },
                       child: const Text(
                         ' اضغط هنا',
-                        style: TextStyle( 
+                        style: TextStyle(
                           fontFamily: "Alexandria",
                           color: Colors.blue,
-                          fontSize: 14
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -127,11 +129,27 @@ class _LoginPageState extends State<LoginPage> {
 
                 // زر تسجيل الدخول
                 ElevatedButton(
-                  onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-            ); },
+                  onPressed: () async {
+                    final email = _emailController.text.trim();
+                    final password = _passwordController.text;
+
+                    final token = await ApiService.loginUser(
+                      email: email,
+                      password: password,
+                    );
+
+                    if (token != null) {
+                      print('🔐 تم تسجيل الدخول، التوكن: $token');
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomePage()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('فشل في تسجيل الدخول')),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
                     backgroundColor: const Color.fromARGB(255, 49, 161, 253),
@@ -150,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 25),
-                // النص "أو"
+
                 const Text(
                   'أو',
                   style: TextStyle(
@@ -161,22 +179,20 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 13),
 
-                // أيقونات تسجيل الدخول عبر منصات أخرى
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                    icon: Image.asset(
-    "Photos/google.png",
-    width: 44, // عرض الأيقونة
-    height: 44, // ارتفاع الأيقونة
-  ),
-  iconSize: 30, // حجم أيقونة الزر، يمكن تغييره أيضًا
-  onPressed: () {
-    print("Button Pressed");
-  },
-),
-
+                      icon: Image.asset(
+                        "Photos/google.png",
+                        width: 44,
+                        height: 44,
+                      ),
+                      iconSize: 30,
+                      onPressed: () {
+                        print("Google login pressed");
+                      },
+                    ),
                     const SizedBox(width: 10),
                     IconButton(
                       iconSize: 55,
@@ -185,22 +201,22 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.blue,
                       ),
                       onPressed: () {
-                        // هنا يمكنك إضافة عملية تسجيل الدخول باستخدام حساب فيسبوك
+                        print("Facebook login pressed");
                       },
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
 
-                // رابط "ليس لديك حساب؟"
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                          return const RegisterPage();
-                        }));
-                        
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const RegisterPage()),
+                        );
                       },
                       child: const Text(
                         'أنشئ حساب',
