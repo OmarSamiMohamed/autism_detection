@@ -1,83 +1,89 @@
 import 'package:autism_detection/Screens/home/supportcontent_page.dart';
 import 'package:flutter/material.dart';
 
-
 class SupportPage extends StatelessWidget {
   const SupportPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // جعل خلفية الصفحة بيضاء
+      backgroundColor: Colors.white, // خلفية الصفحة بيضاء
       appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Colors.white,
         centerTitle: true,
-         title: SizedBox(
+        title: SizedBox(
           height: 120,
           width: 120,
-          child: Image.asset("Photos/gradLogo1.png"), // استبدل بمسار الصورة الخاص بك
+          child: Image.asset("Photos/gradLogo1.png"),
         ),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         children: [
- Column(
-   children: [
-     const Text(
-        'صفحة الدعم والارشادات',
-        style: TextStyle(
-          fontFamily: "Alexandria",
-          fontSize: 25, // حجم الخط الكبير
-          fontWeight: FontWeight.bold, // جعل الخط عريض
-          color: Colors.blue, // لون الخط أسود
-        ),
-        textAlign: TextAlign.center, // جعل النص في المنتصف
-      ),
-       const SizedBox(height: 150),
-       Padding(
-         padding: const EdgeInsets.all(10.0),
-         child: const Text(
-          "مرحبًا بكم في صفحة الدعم والإرشادات التي تقدم معلومات ونصائح موجهة لذوي الهمم. سنتناول هنا بعض التحديات التي قد تواجههم، مع اقتراح طرق لمساعدتهم في التغلب عليها.",
-          style: TextStyle(
-            fontFamily: "Alexandria",
-            fontSize: 17, // حجم الخط الكبير
-            fontWeight: FontWeight.normal, // جعل الخط عريض
-            color: Colors.black, // لون الخط أسود
-          ),
-          textAlign: TextAlign.center, // جعل النص في المنتصف
-               ),
-       ),
-       const SizedBox(height: 270),
-               ElevatedButton(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'صفحة الدعم والإرشادات',
+                style: TextStyle(
+                  fontFamily: "Alexandria",
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 15),
+              const Divider(
+                thickness: 2,
+                color: Colors.blueAccent,
+                indent: 50,
+                endIndent: 50,
+              ),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  "مرحبًا بكم في صفحة الدعم والإرشادات التي تقدم معلومات ونصائح موجهة لذوي الهمم. سنتناول هنا بعض التحديات التي قد تواجههم، مع اقتراح طرق لمساعدتهم في التغلب عليها.",
+                  style: TextStyle(
+                    fontFamily: "Alexandria",
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black87,
+                    height: 1.6,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 100),
+              ElevatedButton(
                 onPressed: () {
-                    Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return const SupportContentPage();
-                          }),
-                        );
-             
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return const SupportContentPage();
+                    }),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 50),
-                  backgroundColor: Colors.blue, // لون الزر الأزرق
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                  backgroundColor: Colors.blue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: const Text(
                   'التالي',
-                style: TextStyle(
-                fontFamily: "Alexandria",
-                fontSize: 20,
-                  color: Colors.white)
+                  style: TextStyle(
+                    fontFamily: "Alexandria",
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-   ],
- ),
-
-
+            ],
+          ),
         ],
       ),
     );
@@ -87,9 +93,13 @@ class SupportPage extends StatelessWidget {
     return ListTile(
       title: Text(
         title,
-        style: const TextStyle(fontFamily: "Alexandria",fontSize: 15, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontFamily: "Alexandria",
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-      trailing: const Icon(Icons.arrow_back_ios, color: Colors.black), // سهم باتجاه اليمين
+      trailing: const Icon(Icons.arrow_back_ios, color: Colors.black),
       onTap: () {
         Navigator.push(
           context,
@@ -99,7 +109,3 @@ class SupportPage extends StatelessWidget {
     );
   }
 }
-
-// Placeholder pages
-
-

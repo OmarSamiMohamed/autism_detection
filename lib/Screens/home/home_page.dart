@@ -48,15 +48,20 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                   fontFamily: "Alexandria",
                   color: Colors.blue,
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(width: 10),
-              CircleAvatar(
-                backgroundColor: Colors.grey.shade300,
-                radius: 20,
-              ),
+             CircleAvatar(
+      radius: 20, // حجم الدائرة
+      backgroundColor: Colors.grey, // لون خلفية الدائرة
+      child: Icon(
+        Icons.person,
+        size: 22, // حجم الأيقونة
+        color: Colors.white, // لون الأيقونة
+      ),
+    )
             ],
           ),
         ),

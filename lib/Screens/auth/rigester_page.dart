@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:autism_detection/Screens/auth/r_verify.dart';
-import 'package:autism_detection/services/api_service.dart';
+import 'package:autism_detection/Screens/auth/sucsess_newacc.dart';
+import 'package:autism_detection/services/api_service.dart'; // تأكد من المسار
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -16,6 +16,58 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordController = TextEditingController();
 
   bool _isPasswordVisible = false;
+
+  Future<void> _register() async {
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    final confirmPassword = _confirmPasswordController.text;
+
+    if (name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      _showMessage("من فضلك املأ جميع الحقول");
+      return;
+    }
+
+    if (password != confirmPassword) {
+      _showMessage("كلمة السر وتأكيدها غير متطابقين");
+      return;
+    }
+
+    _showMessage("جاري إنشاء الحساب...", isLoading: true);
+
+    final token = await ApiService.registerUser(
+      name: name,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    );
+
+    if (token != null) {
+      _showMessage("تم إنشاء الحساب بنجاح 🎉");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SucsessNewacc()),
+      );
+    } else {
+      _showMessage("فشل التسجيل. تحقق من البريد أو كلمة المرور أو حاول لاحقًا.");
+    }
+  }
+
+  void _showMessage(String message, {bool isLoading = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            if (isLoading) const CircularProgressIndicator(color: Colors.white),
+            if (isLoading) const SizedBox(width: 10),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        duration: const Duration(seconds: 3),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,148 +100,36 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                TextField(
+                _buildTextField(
                   controller: _nameController,
-                  textAlign: TextAlign.end,
-                  decoration: InputDecoration(
-                    hintText: 'اسم المستخدم',
-                    hintStyle: const TextStyle(
-                      fontFamily: "Alexandria",
-                      color: Color.fromARGB(255, 96, 96, 96),
-                      fontSize: 19,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.person,
-                      color: Color.fromARGB(255, 96, 96, 96),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
+                  hintText: 'اسم المستخدم',
+                  icon: Icons.person,
                 ),
                 const SizedBox(height: 20),
-                TextField(
+                _buildTextField(
                   controller: _emailController,
-                  textAlign: TextAlign.end,
-                  decoration: InputDecoration(
-                    hintText: 'البريد الالكتروني',
-                    hintStyle: const TextStyle(
-                      fontFamily: "Alexandria",
-                      color: Color.fromARGB(255, 96, 96, 96),
-                      fontSize: 19,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.mail_outline_sharp,
-                      color: Color.fromARGB(255, 96, 96, 96),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
+                  hintText: 'البريد الالكتروني',
+                  icon: Icons.mail_outline_sharp,
                 ),
                 const SizedBox(height: 20),
-                TextField(
+                _buildTextField(
                   controller: _passwordController,
-                  textAlign: TextAlign.end,
+                  hintText: 'كلمة السر',
+                  icon: _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                   obscureText: !_isPasswordVisible,
-                  decoration: InputDecoration(
-                    hintText: 'كلمة السر',
-                    hintStyle: const TextStyle(
-                      fontFamily: "Alexandria",
-                      color: Color.fromARGB(255, 96, 96, 96),
-                      fontSize: 19,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    prefixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                        color: const Color.fromARGB(255, 57, 57, 57),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
+                  isPassword: true,
                 ),
                 const SizedBox(height: 20),
-                TextField(
+                _buildTextField(
                   controller: _confirmPasswordController,
-                  textAlign: TextAlign.end,
+                  hintText: 'تأكيد كلمة السر',
+                  icon: _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                   obscureText: !_isPasswordVisible,
-                  decoration: InputDecoration(
-                    hintText: 'تأكيد كلمة السر',
-                    hintStyle: const TextStyle(
-                      fontFamily: "Alexandria",
-                      color: Color.fromARGB(255, 96, 96, 96),
-                      fontSize: 19,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    prefixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                        color: const Color.fromARGB(255, 57, 57, 57),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
+                  isPassword: true,
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () async {
-                    final name = _nameController.text.trim();
-                    final email = _emailController.text.trim();
-                    final password = _passwordController.text;
-                    final confirmPassword = _confirmPasswordController.text;
-
-                    if (password != confirmPassword) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('كلمة السر وتأكيدها غير متطابقين')),
-                      );
-                      return;
-                    }
-
-                    final token = await ApiService.registerUser(
-                      name: name,
-                      email: email,
-                      password: password,
-                      confirmPassword: confirmPassword,
-                    );
-
-                    if (token != null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return RigesterVerificationScreen();
-                        }),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('فشل في التسجيل')),
-                      );
-                    }
-                  },
+                  onPressed: _register,
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
                     backgroundColor: const Color.fromARGB(255, 49, 161, 253),
@@ -226,9 +166,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: 44,
                         height: 44,
                       ),
-                      iconSize: 30,
                       onPressed: () {
-                        print("Button Pressed");
+                        print("Google Button Pressed");
                       },
                     ),
                     const SizedBox(width: 10),
@@ -239,7 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.blue,
                       ),
                       onPressed: () {
-                        // تسجيل دخول فيسبوك
+                        print("Facebook Button Pressed");
                       },
                     ),
                   ],
@@ -248,6 +187,50 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData icon,
+    bool obscureText = false,
+    bool isPassword = false,
+  }) {
+    return TextField(
+      controller: controller,
+      textAlign: TextAlign.end,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: const TextStyle(
+          fontFamily: "Alexandria",
+          color: Color.fromARGB(255, 96, 96, 96),
+          fontSize: 19,
+          fontWeight: FontWeight.w400,
+        ),
+        prefixIcon: isPassword
+            ? IconButton(
+                icon: Icon(
+                  icon,
+                  color: const Color.fromARGB(255, 57, 57, 57),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  });
+                },
+              )
+            : Icon(
+                icon,
+                color: const Color.fromARGB(255, 96, 96, 96),
+              ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        filled: true,
+        fillColor: Colors.grey[200],
       ),
     );
   }

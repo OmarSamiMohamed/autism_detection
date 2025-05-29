@@ -1,11 +1,30 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart'; // تأكد إنك كتب المسار الصحيح للـ LoginPage
 
-class SucsessNewacc extends StatelessWidget {
+class SucsessNewacc extends StatefulWidget {
   const SucsessNewacc({super.key});
 
   @override
+  State<SucsessNewacc> createState() => _SucsessNewaccState();
+}
+
+class _SucsessNewaccState extends State<SucsessNewacc> {
+  @override
+  void initState() {
+    super.initState();
+    // بعد 3 ثواني، روح لصفحة تسجيل الدخول
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
+    return Scaffold(
+      appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

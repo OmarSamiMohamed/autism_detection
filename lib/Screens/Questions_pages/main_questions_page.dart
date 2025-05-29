@@ -219,7 +219,7 @@ class _RepetitiveBehaviorsPageState extends State<RepetitiveBehaviorsPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(4, (optionIndex) {
             return ChoiceButton(
-              text: ["نعم", "أحيانًا", "نادرًا", "لا"][optionIndex],
+text: ["لا", "نادرًا", "أحيانًا", "نعم"][optionIndex],
               isSelected: selectedAnswers[questionIndex] == optionIndex,
               onTap: () {
                 setState(() {
@@ -350,7 +350,7 @@ class _SocialInteractionPageState extends State<SocialInteractionPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(4, (optionIndex) {
             return ChoiceButton(
-              text: ["نعم", "أحيانًا", "نادرًا", "لا"][optionIndex],
+text: ["لا", "نادرًا", "أحيانًا", "نعم"][optionIndex],
               isSelected: selectedAnswers[questionIndex] == optionIndex,
               onTap: () {
                 setState(() {
@@ -480,7 +480,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(4, (optionIndex) {
             return ChoiceButton(
-              text: ["نعم", "أحيانًا", "نادرًا", "لا"][optionIndex],
+text: ["لا", "نادرًا", "أحيانًا", "نعم"][optionIndex],
               isSelected: selectedAnswers[questionIndex] == optionIndex,
               onTap: () {
                 setState(() {
@@ -615,7 +615,7 @@ class _SelfCarePageState extends State<SelfCarePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(4, (optionIndex) {
             return ChoiceButton(
-              text: ["لا", "نادرا", "أحيانًا", "نعم"][optionIndex],
+text: ["لا", "نادرًا", "أحيانًا", "نعم"][optionIndex],
               isSelected: selectedAnswers[questionIndex] == optionIndex,
               onTap: () {
                 setState(() {
@@ -745,7 +745,7 @@ class _AttentionPageState extends State<AttentionPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(4, (optionIndex) {
             return ChoiceButton(
-              text: ["نعم", "أحيانًا", "نادرًا", "لا"][optionIndex],
+text: ["لا", "نادرًا", "أحيانًا", "نعم"][optionIndex],
               isSelected: selectedAnswers[questionIndex] == optionIndex,
               onTap: () {
                 setState(() {

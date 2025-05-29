@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // مهم جدًا لاستدعاء SharedPreferences
 import 'package:autism_detection/Screens/home/home_page.dart';
 import 'Rigester_page.dart';
 import 'forgetpass_page.dart';
@@ -15,6 +16,55 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+
+  Future<void> _login() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      _showMessage("من فضلك املأ كل الحقول");
+      return;
+    }
+
+    _showMessage("جاري تسجيل الدخول...", isLoading: true);
+
+    final token = await ApiService.loginUser(
+      email: email,
+      password: password,
+    );
+
+    if (token != null) {
+      // حفظ التوكن في SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', token);
+
+      _showMessage("تم تسجيل الدخول بنجاح ✅");
+
+      // الانتقال إلى الصفحة الرئيسية
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } else {
+      _showMessage("فشل في تسجيل الدخول. تأكد من البيانات.");
+    }
+  }
+
+  void _showMessage(String message, {bool isLoading = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            if (isLoading) const CircularProgressIndicator(color: Colors.white),
+            if (isLoading) const SizedBox(width: 10),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        duration: const Duration(seconds: 3),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,63 +89,24 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 50),
 
                 // حقل البريد الإلكتروني
-                TextField(
+                _buildTextField(
                   controller: _emailController,
-                  textAlign: TextAlign.end,
-                  decoration: InputDecoration(
-                    hintText: 'البريد الإلكتروني',
-                    hintStyle: const TextStyle(
-                      fontFamily: "Alexandria",
-                      color: Color.fromARGB(255, 96, 96, 96),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.email,
-                      color: Color.fromARGB(255, 96, 96, 96),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
+                  hintText: 'البريد الإلكتروني',
+                  icon: Icons.email,
                 ),
                 const SizedBox(height: 20),
 
                 // حقل كلمة السر
-                TextField(
+                _buildTextField(
                   controller: _passwordController,
-                  textAlign: TextAlign.end,
+                  hintText: 'كلمة السر',
+                  icon: _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                   obscureText: !_isPasswordVisible,
-                  decoration: InputDecoration(
-                    hintText: 'كلمة السر',
-                    hintStyle: const TextStyle(
-                      fontFamily: "Alexandria",
-                      color: Color.fromARGB(255, 96, 96, 96),
-                      fontSize: 18,
-                    ),
-                    prefixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                        color: const Color.fromARGB(255, 96, 96, 96),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
+                  isPassword: true,
                 ),
                 const SizedBox(height: 10),
 
-                // رابط "نسيت كلمة السر"
+                // رابط نسيت كلمة المرور
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -103,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) =>  ForgetPassPage()),
+                          MaterialPageRoute(builder: (context) => ForgetPassPage()),
                         );
                       },
                       child: const Text(
@@ -129,27 +140,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // زر تسجيل الدخول
                 ElevatedButton(
-                  onPressed: () async {
-                    final email = _emailController.text.trim();
-                    final password = _passwordController.text;
-
-                    final token = await ApiService.loginUser(
-                      email: email,
-                      password: password,
-                    );
-
-                    if (token != null) {
-                      print('🔐 تم تسجيل الدخول، التوكن: $token');
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('فشل في تسجيل الدخول')),
-                      );
-                    }
-                  },
+                  onPressed: _login,
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
                     backgroundColor: const Color.fromARGB(255, 49, 161, 253),
@@ -179,6 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 13),
 
+                // أيقونات تسجيل الدخول البديل
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -242,6 +234,50 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData icon,
+    bool obscureText = false,
+    bool isPassword = false,
+  }) {
+    return TextField(
+      controller: controller,
+      textAlign: TextAlign.end,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: const TextStyle(
+          fontFamily: "Alexandria",
+          color: Color.fromARGB(255, 96, 96, 96),
+          fontSize: 19,
+          fontWeight: FontWeight.w400,
+        ),
+        prefixIcon: isPassword
+            ? IconButton(
+                icon: Icon(
+                  icon,
+                  color: const Color.fromARGB(255, 57, 57, 57),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  });
+                },
+              )
+            : Icon(
+                icon,
+                color: const Color.fromARGB(255, 96, 96, 96),
+              ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        filled: true,
+        fillColor: Colors.grey[200],
       ),
     );
   }
