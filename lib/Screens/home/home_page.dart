@@ -1,6 +1,6 @@
+import 'package:autism_detection/Screens/Questions_pages/questions_page.dart';
 import 'package:autism_detection/Screens/home/support_page.dart';
 import 'package:flutter/material.dart';
-import 'package:autism_detection/Screens/home/diagnosis_page.dart';
 import 'package:autism_detection/services/gemini_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -133,7 +133,7 @@ class HomeContent extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                    return DiagnosisPage();
+                    return QuestionsPage();
                   }));
                 },
                 style: ElevatedButton.styleFrom(

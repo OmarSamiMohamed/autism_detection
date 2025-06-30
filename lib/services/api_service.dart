@@ -83,4 +83,45 @@ class ApiService {
       return null;
     }
   }
+
+  /// إرسال إجابات الأسئلة وتحليلها
+  static Future<Map<String, dynamic>?> submitCategoryAnswers({
+    required String token,
+    required String childId,
+    required int categoryId,
+    required List<int> answers,
+  }) async {
+    final url = Uri.parse("$baseUrl/child/category-score");
+
+    final payload = {
+      "child_id": childId,
+      "category_id": categoryId,
+      "answers": answers.map((value) => {"value": value}).toList(),
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          "Authorization": "Bearer $token",
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode(payload),
+      );
+
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        print("✅ النتيجة المستلمة: $responseData");
+        return responseData;
+      } else {
+        print("❌ فشل في الإرسال (${response.statusCode}): $responseData");
+        return null;
+      }
+    } catch (e) {
+      print("🚨 خطأ في الإرسال: $e");
+      return null;
+    }
+  }
 }
