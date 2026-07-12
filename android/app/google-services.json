@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "643763211290",
+    "project_id": "autism-detection-b00ea",
+    "storage_bucket": "autism-detection-b00ea.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643763211290:android:1a0444c6d27f35bc5e95a3",
+        "android_client_info": {
+          "package_name": "com.example.graduation_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXjMaMzDVhf7OQ2qREVjIptPJ7jaFot_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
